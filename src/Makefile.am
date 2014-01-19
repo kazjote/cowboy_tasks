@@ -20,10 +20,11 @@ AM_CFLAGS =\
 bin_PROGRAMS = cowboy_tasks
 
 cowboy_tasks_SOURCES = \
-	cowboy_tasks.vala config.vapi
+	cowboy_tasks.vala config.vapi rtm-task.vala cowboy_tasks.css
 
 cowboy_tasks_VALAFLAGS =  \
-	--pkg gtk+-3.0
+	--pkg gtk+-3.0 \
+	--pkg json-glib-1.0
 
 cowboy_tasks_LDFLAGS = \
 	-Wl,--export-dynamic

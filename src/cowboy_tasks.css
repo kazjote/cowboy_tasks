@@ -1,0 +1,7 @@
+GtkLabel {
+	padding: 10px 10px;
+}
+
+.caption {
+	font-weight: bold;
+}

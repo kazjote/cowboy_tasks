@@ -29,27 +29,37 @@ public class Main : Object
 	 */
 	//const string UI_FILE = Config.PACKAGE_DATA_DIR + "/ui/" + "cowboy_tasks.ui";
 	const string UI_FILE = "src/cowboy_tasks.ui";
+	const string CSS_FILE = "src/cowboy_tasks.css";
+
+	private Builder builder;
 
 	/* ANJUTA: Widgets declaration for cowboy_tasks.ui - DO NOT REMOVE */
 
-
-	public Main ()
+	public Main (RtmTask task)
 	{
-
-		try 
-		{
-			var builder = new Builder ();
+		try {
+			builder = new Builder ();
 			builder.add_from_file (UI_FILE);
 			builder.connect_signals (this);
 
 			var window = builder.get_object ("window") as Window;
+
+			var screen = Gdk.Screen.get_default ();
+			var css_provider = new CssProvider(); 
+			css_provider.load_from_file (File.new_for_path (CSS_FILE));
+
+			var style_context = window.get_style_context ();
+			style_context.add_provider_for_screen (screen, css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION);
+			
 			/* ANJUTA: Widgets initialization for cowboy_tasks.ui - DO NOT REMOVE */
 			window.show_all ();
-		} 
+		}
 		catch (Error e) {
 			stderr.printf ("Could not load UI: %s\n", e.message);
 		} 
 
+		var name_label = builder.get_object ("name_label") as Label;
+		name_label.label = task.name;
 	}
 
 	[CCode (instance_pos = -1)]
@@ -60,8 +70,17 @@ public class Main : Object
 
 	static int main (string[] args) 
 	{
+		string json = stdin.read_line ();
+
+		var parser = new Json.Parser ();
+        parser.load_from_data (json, -1);
+
+        var root_object = parser.get_root ().get_object ();
+
+		RtmTask task = new RtmTask (root_object);
+		
 		Gtk.init (ref args);
-		var app = new Main ();
+		var app = new Main (task);
 
 		Gtk.main ();
 		
