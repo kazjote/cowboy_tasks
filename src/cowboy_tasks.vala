@@ -28,8 +28,8 @@ public class Main : Object
 	 * or installing
 	 */
 	//const string UI_FILE = Config.PACKAGE_DATA_DIR + "/ui/" + "cowboy_tasks.ui";
-	const string UI_FILE = "src/cowboy_tasks.ui";
-	const string CSS_FILE = "src/cowboy_tasks.css";
+	const string UI_FILE = "/home/kazjote/projects/cowboy-tasks/src/cowboy_tasks.ui";
+	const string CSS_FILE = "/home/kazjote/projects/cowboy-tasks/src/cowboy_tasks.css";
 
 	private Builder builder;
 
@@ -58,8 +58,23 @@ public class Main : Object
 			stderr.printf ("Could not load UI: %s\n", e.message);
 		} 
 
-		var name_label = builder.get_object ("name_label") as Label;
-		name_label.label = task.name;
+		populate_label(builder, "name_label", task.name);
+		populate_label(builder, "url_label", task.url);
+		populate_label(builder, "due_label", task.due);
+		populate_label(builder, "priority_label", task.priority);
+		populate_label(builder, "estimate_label", task.estimate);
+
+    var note = task.get_note ();
+
+    if(note != null) {
+      var text_view = builder.get_object ("note_text_view") as TextView;
+      text_view.buffer.text = note.get_content ();
+    }
+	}
+
+	private void populate_label (Builder builder, string label_name, string label_value) {
+		var label = builder.get_object (label_name) as Label;
+		label.label = (label_value == null) ? "" : label_value;
 	}
 
 	[CCode (instance_pos = -1)]

@@ -20,7 +20,7 @@ AM_CFLAGS =\
 bin_PROGRAMS = cowboy_tasks
 
 cowboy_tasks_SOURCES = \
-	cowboy_tasks.vala config.vapi rtm-task.vala cowboy_tasks.css
+	cowboy_tasks.vala config.vapi rtm-task.vala rtm-note.vala cowboy_tasks.css
 
 cowboy_tasks_VALAFLAGS =  \
 	--pkg gtk+-3.0 \

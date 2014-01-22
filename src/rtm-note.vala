@@ -1,6 +1,6 @@
 /* -*- Mode: vala; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
- * rtm-task.vala
+ * rtm-note.vala
  * Copyright (C) 2014 Kacper Bielecki <kazjote@Desktop-Power>
  *
  * cowboy-tasks is free software: you can redistribute it and/or modify it
@@ -17,36 +17,28 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class RtmTask : GLib.Object {
+public class RtmNote : GLib.Object {
 
-	private Json.Object root_node;
+  private Json.Node root_node;
 
-	// Constructor
-	public RtmTask (Json.Object node) {
-		root_node = node;
-	}
+  public RtmNote (Json.Node node) {
+    root_node = node;
+  }
 
-	public string name {
-		get { return root_node.get_string_member ("name"); }
-	}
+  public string get_content () {
+    if(root_node == null) return "";
 
-	public string url {
-		get { return root_node.get_string_member ("url"); }
-	}
+    if(root_node.type_name () == "JsonObject") { // Hash
+      return read_node (root_node);
+    } else { // Array
+      var array = root_node.get_array ();
+      var element = array.get_element(0);
 
-	public string due {
-		get { return root_node.get_string_member ("due"); }
-	}
+      return read_node (element);
+    }
+  }
 
-	public string priority {
-		get { return root_node.get_string_member ("priority"); }
-	}
-
-	public string estimate {
-		get { return root_node.get_string_member ("estimate"); }
-	}
-
-  public RtmNote get_note () {
-    return (new RtmNote (root_node.get_member ("notes")));
+  private string read_node (Json.Node node) {
+    return node.get_object ().get_string_member ("$t");
   }
 }
