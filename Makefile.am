@@ -3,7 +3,7 @@
 
 SUBDIRS = src 
 
-cowboy_tasksdocdir = ${prefix}/doc/cowboy_tasks
+cowboy_tasksdocdir = ${prefix}/share/doc/cowboy_tasks
 cowboy_tasksdoc_DATA = \
 	README\
 	COPYING\
