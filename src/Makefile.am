@@ -2,9 +2,8 @@
 
 ## Created by Anjuta
 
-
 uidir = $(pkgdatadir)/ui
-ui_DATA = cowboy_tasks.ui
+ui_DATA = cowboy_tasks.ui cowboy_tasks.css
 
 
 AM_CPPFLAGS = \

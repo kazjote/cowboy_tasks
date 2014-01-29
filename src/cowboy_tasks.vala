@@ -27,9 +27,12 @@ public class Main : Object
 	 * Uncomment this line when you are done testing and building a tarball
 	 * or installing
 	 */
-	//const string UI_FILE = Config.PACKAGE_DATA_DIR + "/ui/" + "cowboy_tasks.ui";
+	const string UI_FILE = Config.PACKAGE_DATA_DIR + "/ui/" + "cowboy_tasks.ui";
+	const string CSS_FILE = Config.PACKAGE_DATA_DIR + "/ui/" + "cowboy_tasks.css";
+  /*
 	const string UI_FILE = "/home/kazjote/projects/cowboy-tasks/src/cowboy_tasks.ui";
 	const string CSS_FILE = "/home/kazjote/projects/cowboy-tasks/src/cowboy_tasks.css";
+  */
 
 	private Builder builder;
 
